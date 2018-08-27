@@ -1,8 +1,25 @@
 import React from 'react';
 import { StyleSheet, Text, View, Button } from 'react-native';
-import { MapView } from 'expo';
+import { MapView, Location, Permissions } from 'expo';
 
 export default class App extends React.Component {
+  componentWillMount() {
+    this._getLocationAsync();
+  }
+
+  _getLocationAsync = async () => {
+    let { status } = await Permissions.askAsync(Permissions.LOCATION);
+
+    if (status === 'granted') {
+      let location = await Location.getCurrentPositionAsync({});
+      console.log('LOCATION', location);
+
+      this.setState({ location });
+    } else {
+      console.log('Permission not granted');
+    }
+  };
+
   handleBestDealPress() {
     console.log('Kaka');
   }
