@@ -3,6 +3,17 @@ import { StyleSheet, Text, View, Button } from 'react-native';
 import { MapView, Location, Permissions } from 'expo';
 
 export default class App extends React.Component {
+  constructor() {
+    super()
+
+    this.state = {
+      location: {
+        latitude: 20.659698,
+        longitude: -103.349609,
+      }
+    };
+  }
+
   componentWillMount() {
     this._getLocationAsync();
   }
@@ -11,10 +22,9 @@ export default class App extends React.Component {
     let { status } = await Permissions.askAsync(Permissions.LOCATION);
 
     if (status === 'granted') {
-      let location = await Location.getCurrentPositionAsync({});
-      console.log('LOCATION', location);
+      let { coords } = await Location.getCurrentPositionAsync({});
 
-      this.setState({ location });
+      this.setState({ location: coords });
     } else {
       console.log('Permission not granted');
     }
@@ -25,23 +35,33 @@ export default class App extends React.Component {
   }
 
   render() {
+    const { state } = this;
+
     return (
       <View style={styles.container}>
         <MapView
           style={styles.map}
-          initialRegion={{
-            latitude: 37.78825,
-            longitude: -122.4324,
+          region={{
+            latitude: state.location.latitude,
+            longitude: state.location.longitude,
             latitudeDelta: 0.0922,
             longitudeDelta: 0.0421,
           }}
-        />
+        >
+          <MapView.Marker
+            coordinate={{
+              latitude: state.location.latitude,
+              longitude: state.location.longitude
+            }}
+            title={'Tu ubicación'}
+          />
+        </MapView>
 
         <Button
           onPress={this.handleBestDealPress}
-          title="Mejor Precio"
-          color="#841584"
-          accessibilityLabel="Mostrar estación con mejor precio"
+          title='Mejor Precio'
+          color='#841584'
+          accessibilityLabel='Mostrar estación con mejor precio'
         />
       </View>
     );
@@ -53,7 +73,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'flex-end',
   },
   map: {
     position: 'absolute',
