@@ -2,7 +2,7 @@
 import qs from 'query-string';
 
 
-const API_URL = 'http://192.168.0.42:3000';
+const API_URL = 'http://192.168.1.90:3000';
 
 export async function getStations({ lat, lng, limit = 50 }) {
   const params = qs.stringify({

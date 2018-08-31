@@ -2,6 +2,8 @@ import React from 'react';
 import { StyleSheet, Text, View, Button } from 'react-native';
 import { MapView, Location, Permissions } from 'expo';
 
+import { PriceMarker } from './components';
+
 import api from './api';
 
 
@@ -46,14 +48,15 @@ export default class App extends React.Component {
   }
 
   renderStationMarkers(stations) {
-    return stations.map(({ _id, name, location }) => (
-      <MapView.Marker
+    return stations.map(({ _id, name, location, prices }) => (
+      <PriceMarker
         key={_id}
         coordinate={{
           longitude: location.coordinates[0],
           latitude: location.coordinates[1],
         }}
         title={name}
+        amount={prices[0].price}
       />
     ));
   }
