@@ -2,6 +2,9 @@ import React from 'react';
 import { StyleSheet, Text, View, Button } from 'react-native';
 import { MapView, Location, Permissions } from 'expo';
 
+import api from './api';
+
+
 export default class App extends React.Component {
   constructor() {
     super()
@@ -15,7 +18,13 @@ export default class App extends React.Component {
   }
 
   componentWillMount() {
-    this._getLocationAsync();
+    this._getLocationAsync()
+      .then(() => this._loadNearStations(this.state.location));
+  }
+
+  async _loadNearStations({ latitude: lat, longitude: lng }) {
+    const stations = await api.getStations({ lat, lng });
+
   }
 
   _getLocationAsync = async () => {
