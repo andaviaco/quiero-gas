@@ -13,7 +13,8 @@ export default class App extends React.Component {
       location: {
         latitude: 20.659698,
         longitude: -103.349609,
-      }
+      },
+      stations: [],
     };
   }
 
@@ -25,6 +26,7 @@ export default class App extends React.Component {
   async _loadNearStations({ latitude: lat, longitude: lng }) {
     const stations = await api.getStations({ lat, lng });
 
+    this.setState({ stations });
   }
 
   _getLocationAsync = async () => {
@@ -41,6 +43,19 @@ export default class App extends React.Component {
 
   handleBestDealPress() {
     console.log('Kaka');
+  }
+
+  renderStationMarkers(stations) {
+    return stations.map(({ _id, name, location }) => (
+      <MapView.Marker
+        key={_id}
+        coordinate={{
+          longitude: location.coordinates[0],
+          latitude: location.coordinates[1],
+        }}
+        title={name}
+      />
+    ));
   }
 
   render() {
@@ -64,6 +79,8 @@ export default class App extends React.Component {
             }}
             title={'Tu ubicación'}
           />
+
+          { this.renderStationMarkers(state.stations) }
         </MapView>
 
         <Button
