@@ -1,8 +1,8 @@
 import React from 'react';
-import { StyleSheet, Text, View, Button } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import { MapView, Location, Permissions } from 'expo';
 
-import { PriceMarker } from './components';
+import { PriceMarker, StationMapList } from './components';
 
 import api from './api';
 
@@ -43,10 +43,6 @@ export default class App extends React.Component {
     }
   };
 
-  handleBestDealPress() {
-    console.log('Kaka');
-  }
-
   renderStationMarkers(stations) {
     return stations.map(({ _id, name, location, prices }) => (
       <PriceMarker
@@ -86,11 +82,8 @@ export default class App extends React.Component {
           { this.renderStationMarkers(state.stations) }
         </MapView>
 
-        <Button
-          onPress={this.handleBestDealPress}
-          title='Mejor Precio'
-          color='#841584'
-          accessibilityLabel='Mostrar estación con mejor precio'
+        <StationMapList
+          data={state.stations}
         />
       </View>
     );
