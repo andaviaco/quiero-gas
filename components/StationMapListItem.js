@@ -11,11 +11,14 @@ class StationMapListItem extends React.PureComponent {
     const textColor = this.props.selected ? "red" : "black";
 
     return (
-      <Card style={[ styles.container, this.props.style ]} onPress={this._onPress}>
-        <CardItem header>
+      <Card
+        style={[ styles.container, this.props.style ]}
+        onPress={this._onPress}
+      >
+        <CardItem header style={styles.header}>
           <Text>{this.props.title}</Text>
         </CardItem>
-        <CardItem>
+        <CardItem style={styles.body}>
           <Body>
             <Text>
               Regular {this.props.prices.regular.price}
@@ -35,10 +38,19 @@ class StationMapListItem extends React.PureComponent {
 
 const styles = StyleSheet.create({
   container: {
-    width: 300,
-    marginLeft: 10,
-    marginRight: 10,
-  }
+    justifyContent: 'space-between',
+    width: 250,
+    marginLeft: 5,
+    marginRight: 5,
+  },
+  header: {
+    marginBottom: 0,
+    paddingBottom: 0,
+  },
+  body: {
+    marginBottom: 0,
+    paddingBottom: 0,
+  },
 });
 
 

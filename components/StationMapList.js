@@ -52,7 +52,8 @@ class StationMapList extends React.PureComponent {
 
 const styles = StyleSheet.create({
   container: {
-    height: 150,
+    height: 180,
+    marginBottom: 10,
   },
   firstItem: {
     marginLeft: 40,
