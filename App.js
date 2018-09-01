@@ -52,7 +52,7 @@ export default class App extends React.Component {
           latitude: location.coordinates[1],
         }}
         title={name}
-        amount={prices[0].price}
+        amount={prices.regular.price}
       />
     ));
   }
