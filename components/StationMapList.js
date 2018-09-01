@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, FlatList, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, FlatList } from 'react-native';
 
 import StationMapListItem from './StationMapListItem';
 
@@ -15,16 +15,22 @@ class StationMapList extends React.PureComponent {
 
   _keyExtractor = (item) => item._id;
 
-  _renderItem = ({ item }) => {
+  _renderItem = ({ item, index }) => {
+    const lastPos = this.props.data.length - 1;
+    const style = index === 0 && styles.firstItem || index === lastPos && styles.lastItem;
 
     return (
-    <StationMapListItem
-      id={item._id}
-      onPressItem={this._onPressItem}
-      selected={this.state.selected === item._id}
-      title={item.name}
-    />
-  )};
+      <StationMapListItem
+        style={style}
+        id={item._id}
+        onPressItem={this._onPressItem}
+        selected={this.state.selected === item._id}
+        title={item.addressStreet}
+        prices={item.prices}
+        distance={item.distance}
+      />
+    )
+  };
 
   render() {
     const { data } = this.props;
@@ -46,12 +52,13 @@ class StationMapList extends React.PureComponent {
 
 const styles = StyleSheet.create({
   container: {
-    height: 50,
-    backgroundColor: 'lightgreen',
+    height: 150,
   },
-  list: {
-    backgroundColor: 'blue',
-    paddingVertical: 5,
+  firstItem: {
+    marginLeft: 40,
+  },
+  lastItem: {
+    marginRight: 40,
   },
 });
 

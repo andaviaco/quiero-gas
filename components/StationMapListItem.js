@@ -1,5 +1,6 @@
 import React from 'react';
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { StyleSheet, TouchableOpacity } from 'react-native';
+import { Card, CardItem, Text, Body } from 'native-base';
 
 class StationMapListItem extends React.PureComponent {
   _onPress = () => {
@@ -10,22 +11,33 @@ class StationMapListItem extends React.PureComponent {
     const textColor = this.props.selected ? "red" : "black";
 
     return (
-      <TouchableOpacity onPress={this._onPress}>
-        <View style={styles.container}>
-          <Text style={{ color: textColor }}>
-            {this.props.title}
-          </Text>
-        </View>
-      </TouchableOpacity>
+      <Card style={[ styles.container, this.props.style ]} onPress={this._onPress}>
+        <CardItem header>
+          <Text>{this.props.title}</Text>
+        </CardItem>
+        <CardItem>
+          <Body>
+            <Text>
+              Regular {this.props.prices.regular.price}
+            </Text>
+            <Text>
+              Distancia {this.props.distance.toFixed(2)} M
+            </Text>
+          </Body>
+        </CardItem>
+        <CardItem footer>
+          <Text>Ver ruta</Text>
+        </CardItem>
+      </Card>
     );
   }
 }
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: 'green',
-    height: 300,
-    marginHorizontal: 5,
+    width: 300,
+    marginLeft: 10,
+    marginRight: 10,
   }
 });
 
