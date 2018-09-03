@@ -20,15 +20,24 @@ export default class App extends React.Component {
     };
   }
 
-  componentWillMount() {
-    this._getLocationAsync()
-      .then(() => this._loadNearStations(this.state.location));
+  async componentWillMount() {
+    await this._loadFonts();
+    await this._getLocationAsync();
+
+    this._loadNearStations(this.state.location);
   }
 
   async _loadNearStations({ latitude: lat, longitude: lng }) {
     const stations = await api.getStations({ lat, lng });
 
     this.setState({ stations });
+  }
+
+  async _loadFonts() {
+    return await Expo.Font.loadAsync({
+      'Roboto': require('native-base/Fonts/Roboto.ttf'),
+      'Roboto_medium': require('native-base/Fonts/Roboto_medium.ttf'),
+    })
   }
 
   _getLocationAsync = async () => {
