@@ -1,11 +1,23 @@
 import React from 'react';
-import { StyleSheet, TouchableOpacity } from 'react-native';
-import { Card, CardItem, Text, Body } from 'native-base';
+import { StyleSheet, Linking } from 'react-native';
+import { Card, CardItem, Text, Body, Button } from 'native-base';
+import qs from 'query-string';
+
+
+const GOOGLE_MAPS_API = 'https://www.google.com/maps/dir/?api=1';
 
 class StationMapListItem extends React.PureComponent {
   _onPress = () => {
     this.props.onPressItem(this.props.id);
   };
+
+  _onDirectionsPress = () => {
+    const params = qs.stringify({
+      destination: this.props.address,
+    });
+
+    Linking.openURL(`${GOOGLE_MAPS_API}&${params}`);
+  }
 
   render() {
     const textColor = this.props.selected ? "red" : "black";
@@ -15,7 +27,10 @@ class StationMapListItem extends React.PureComponent {
         style={[ styles.container, this.props.style ]}
         onPress={this._onPress}
       >
-        <CardItem header style={styles.header}>
+        <CardItem
+          header
+          style={styles.header}
+        >
           <Text>{this.props.title}</Text>
         </CardItem>
         <CardItem style={styles.body}>
@@ -29,7 +44,13 @@ class StationMapListItem extends React.PureComponent {
           </Body>
         </CardItem>
         <CardItem footer>
-          <Text>Ver ruta</Text>
+          <Button
+            transparent
+            info
+            onPress={this._onDirectionsPress}
+          >
+            <Text>Ver ruta</Text>
+          </Button>
         </CardItem>
       </Card>
     );

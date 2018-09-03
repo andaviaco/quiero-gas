@@ -26,6 +26,7 @@ class StationMapList extends React.PureComponent {
         onPressItem={this._onPressItem}
         selected={this.state.selected === item._id}
         title={item.addressStreet}
+        address={item.addressStreet}
         prices={item.prices}
         distance={item.distance}
       />
