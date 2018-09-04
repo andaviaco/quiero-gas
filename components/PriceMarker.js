@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
     flex: 0,
     flexDirection: 'row',
     alignSelf: 'flex-start',
-    backgroundColor: '#82E571',
+    backgroundColor: '#00ffa2',
     borderRadius: 3,
     borderColor: '#3DC624',
     borderWidth: 0.5,
@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
     borderColor: 'transparent',
     borderWidth: 4,
-    borderTopColor: '#82E571',
+    borderTopColor: '#00ffa2',
     marginTop: -9,
   }
 });

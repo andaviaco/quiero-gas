@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, Linking } from 'react-native';
-import { Card, CardItem, Text, Body, Button } from 'native-base';
+import { Card, CardItem, Text, Body, Button, Icon, View } from 'native-base';
 import qs from 'query-string';
 
 
@@ -20,7 +20,8 @@ class StationMapListItem extends React.PureComponent {
   }
 
   render() {
-    const textColor = this.props.selected ? "red" : "black";
+    const { regular, premium } = this.props.prices;
+    const distance = Math.ceil(this.props.distance);
 
     return (
       <Card
@@ -35,15 +36,28 @@ class StationMapListItem extends React.PureComponent {
         </CardItem>
         <CardItem style={styles.body}>
           <Body>
-            <Text>
-              Regular {this.props.prices.regular.price}
-            </Text>
-            <Text>
-              Distancia {this.props.distance.toFixed(2)} M
-            </Text>
+            <View style={styles.priceContainer}>
+              {regular &&
+                <View style={styles.price}>
+                  <Icon name='logo-usd' style={styles.priceIconRegular}/>
+                  <Text style={styles.priceValue}>{regular.price}</Text>
+                </View>
+              }
+              {premium &&
+                <View style={styles.price}>
+                  <Icon name='logo-usd' style={styles.priceIconPremium}/>
+                  <Text>{premium.price}</Text>
+                </View>
+              }
+            </View>
           </Body>
         </CardItem>
-        <CardItem footer>
+        <CardItem footer style={styles.footer}>
+          <View style={styles.price}>
+            <Icon name='car'/>
+            <Text>{distance} M</Text>
+          </View>
+
           <Button
             transparent
             info
@@ -65,12 +79,37 @@ const styles = StyleSheet.create({
     marginRight: 5,
   },
   header: {
+    flex: 1,
     marginBottom: 0,
     paddingBottom: 0,
   },
   body: {
+    flex: 1,
     marginBottom: 0,
     paddingBottom: 0,
+  },
+  footer: {
+    flex: 1,
+  },
+  priceContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  price: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  priceIconRegular: {
+    color: '#00ffa2',
+  },
+  priceIconPremium: {
+    color: '#fb4f18',
+  },
+  priceValue: {
+    fontSize: 20,
+    fontWeight: 'bold',
   },
 });
 
